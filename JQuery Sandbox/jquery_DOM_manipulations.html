@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<title>jQuery Crash Course</title>
+	<style>
+		body {
+			font-size: 17px;
+			font-family: Verdana, Halvetica;
+			background: #f4f4f4;
+			line-height: 1.5em;
+		}
+		header {
+			background: #333;
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+			border-bottom: 4px solid #000;
+			margin-bottom: 10px;
+		}
+		#container {
+			width: 90%;
+			margin: auto;
+			padding: 10px;
+			/*text-align: center;*/
+		}
+		#container div {
+			margin-bottom: 10px;
+		}
+
+		.myClass {
+			color: orange;
+			background: darkred;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>jQuery Crash Course | DOM manipulations</h1>
+	</header>
+	
+	<div id="container">
+
+		<button id="btn1">Button 1</button>
+		<button class="btn1">Wrap 'Div-1' with 'h1' tags</button>
+
+		<p class="para1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas enim a, ipsam? Recusandae ipsa nisi quia eos maiores delectus dolorum eius ex ea, at dolores, nesciunt natus esse doloremque veritatis?</p>
+
+		<p id="para2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas enim a, ipsam? Recusandae ipsa nisi quia eos maiores delectus dolorum eius ex ea, at dolores, nesciunt natus esse doloremque veritatis?</p>
+		
+		<div id="myDiv1"></div>
+		<div id="myDiv2"></div>
+		
+		<button id="btn2">Prepend list Item</button>
+		<button id="btn3">Append list Item</button>
+		<button id="btn4">Empty list Items</button>
+		<br>
+		<input type="text" id="newItem">
+		<ul id="list">
+			<li>List Item</li>
+			<li>List Item</li>
+			<li>List Item</li>
+		</ul>
+		<a href="http://google.com">Google</a>
+		<hr>
+		<ul id="users"></ul>
+	</div>
+
+	<script>
+		$(document).ready(function(){
+			//$('p.para1').css('color', 'red');
+			$('p.para1').css({color:'yellow', background:'#000', fontWeight:'bold'});
+			//$('p#para2').addClass('myClass');
+			$('#btn1').click(function(){
+				$('#para2').toggleClass('myClass');
+				$('#myDiv1').text('Hello, guys!');
+				$('#myDiv2').html('<h3><em>Hello and you, girls!</em></h3>');
+			});
+
+			$('#btn3').click(function(){
+				$('#list').append('<li>Append LIst Item</li>');
+			});
+			$('#btn2').click(function(){
+				$('#list').prepend('<li>Prepend LIst Item</li>');
+			});
+			$('#btn4').click(function(){
+				$('#list').empty();
+			});
+
+			$('a').attr('target', '_blank');
+
+			$('.btn1').click(function(){
+				$('#myDiv1').wrap('<h1>');
+			});
+
+			$('#newItem').keyup(function(e){
+				e.preventDefault();
+				var code = e.which;
+				var li = '<li>' + e.target.value + '</li>';
+				if (code == 13) {
+					$('#list').append(li);
+				}
+			});
+
+			var arrUsers = ['Pesho', 'Gosho', 'Evlogi', 'Minka', 'Totka'];
+			$.each(arrUsers, function(i, val){
+				$('#users').append('<li>'+val+'</li>');
+			});
+		});
+	</script>
+</body>
+</html>
+
+

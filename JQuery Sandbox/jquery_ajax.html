@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<title>jQuery Crash Course</title>
+	<style>
+		body {
+			font-size: 17px;
+			font-family: Verdana, Halvetica;
+			background: #f4f4f4;
+			line-height: 1.5em;
+		}
+		header {
+			background: #333;
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+			border-bottom: 4px solid #000;
+			margin-bottom: 10px;
+		}
+		#container {
+			width: 90%;
+			margin: auto;
+			padding: 10px;
+			/*text-align: center;*/
+		}
+		#container div {
+			margin-bottom: 10px;
+		}
+
+		#box {
+			color: #fff;
+			background: darkred;
+			width: 500px;
+			height: 90px;
+			padding: 40px;
+			text-align: center;
+		}
+		#box2 {
+			background: green;
+			color: #fff;
+			text-align: center;
+			padding-top: 80px;
+			width: 200px;
+			height: 110px;
+			position: relative;
+		}
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			padding: 5px 10px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>jQuery Crash Course | AJAX</h1>
+	</header>
+	
+	<div id="container">
+		<div id="result"></div>
+		<table>
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>username</th>
+					<th>email</th>
+				</tr>
+			</thead>
+			<tbody id="users"></tbody>
+		</table>
+		<hr>
+		<h1>Add Post</h1>
+		<form method="post" id="postForm" action="https://jsonplaceholder.typicode.com/posts">
+			Title: <input type="text" id="title"><br>
+			Text: <textarea name="body" id="body" rows="3"></textarea>
+			<br>
+			Send Post: <button id="btnSubmit" type="submit">Go!</button>
+		</form>
+	</div>
+
+	<script>
+		$(document).ready(function(){
+			//Using load() method:
+			/*
+			$('#result').load('test.html', function(responseTxt, statusTxt, xhr){
+				if(statusTxt == "success"){
+					alert('It went fine');
+				} else if (statusTxt == "error"){
+					alert('Error: ' + xhr.statusText);
+				}
+			});
+			*/
+
+			//Using get() method:
+			/*
+			$.get('test.html', function(data){
+				console.log(data);
+				$('#result').html(data);
+			});
+			*/
+
+			//Using getJSON() method:
+			/*
+			$.getJSON('users.json', function(data){
+				console.log(data);
+				$.each(data, function(i, user){
+					$('#users').append('<tr><td>' + user.id + '</td><td>' + user.name + '</td><td>' + user.username + '</td><td>' + user.email + '</td></li>');
+				});
+			});
+			*/
+
+			//Using AJAX method:
+			/*
+			$.ajax({
+				method: 'GET',
+				url: 'https://jsonplaceholder.typicode.com/posts',
+				dataType: 'json'
+			}).done(function(data){
+				$.map(data, function(post, i){
+					var post = '<h3>'+post.title+'</h3><p>'+post.body+'</p>';
+					$('#result').append(post);
+				});
+			});
+			*/
+
+			//Using POST method:
+			$('#postForm').submit(function(e){
+				e.preventDefault();
+				var title = $('#title').val();
+				var body = $('#body').val();
+				var url = $(this).attr('action');
+
+				$.post(url, {title:title, body:body}).
+					done(function(data){
+						console.log('Post saved');
+						console.log(data);
+					});
+			});
+
+		});
+	</script>
+</body>
+</html>
+
+
